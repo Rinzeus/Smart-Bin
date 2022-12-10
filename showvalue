@@ -1,0 +1,5 @@
+def show(value): 
+
+    global equation 
+    equation+=value 
+    label_result.config(text=equation) 
