@@ -1,0 +1,61 @@
+const int trig = 12;
+const int echo = 13;
+
+int duration = 0;
+int distance = 0;
+
+int smokeA0 = A0;
+int buzzer = 11;
+
+float sensorValue = 11;
+
+void setup() 
+{
+  pinMode(trig , OUTPUT);
+  pinMode(echo , INPUT);
+  
+
+  pinMode (buzzer, OUTPUT);
+  pinMode (smokeA0, INPUT);
+  
+  Serial.begin(9600);
+  delay(2000);
+  noTone(buzzer);
+}
+
+void loop()
+{
+  digitalWrite(trig , HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(trig , LOW);
+
+  duration = pulseIn(echo , HIGH);
+  distance = (duration/2) / 28.5 ;
+  Serial.print("     Distance: ");
+  Serial.println(distance);
+
+  sensorValue = analogRead(smokeA0);
+
+  Serial.print("Sensor Value: ");
+  Serial.print(sensorValue);
+
+  if (sensorValue > 300)
+  {
+    Serial.print(" | Smoke detected!!!");
+    tone(buzzer,1000,200);
+  }
+  else
+  {
+    noTone(buzzer);
+  }
+  delay(200);
+   if ( distance <= 10)
+  {
+    tone(buzzer,1000,200);
+  }
+  else
+  {
+    noTone(buzzer);
+  }
+  delay(200);
+}
